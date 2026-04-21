@@ -55,4 +55,34 @@ public class LibrarySystem {
             );
         }
     }
+    public boolean checkoutBook(String isbn) {
+        Book book = books.get(isbn);
+
+        if (book == null) {
+            System.out.println("Book not found in library system.");
+            return false;
+        }
+
+        if (book.getQuantity() > 0) {
+            book.setQuantity(book.getQuantity() - 1);
+            System.out.println("Checked out: " + book.getTitle());
+            return true;
+        } else {
+            System.out.println("Book is out of stock.");
+            return false;
+        }
+    }
+
+    public boolean returnBook(String isbn) {
+        Book book = books.get(isbn);
+
+        if (book == null) {
+            System.out.println("Book not found.");
+            return false;
+        }
+
+        book.setQuantity(book.getQuantity() + 1);
+        System.out.println("Returned: " + book.getTitle());
+        return true;
+    }
 }

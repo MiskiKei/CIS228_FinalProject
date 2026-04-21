@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class LibrarySystem {
@@ -48,13 +51,14 @@ public class LibrarySystem {
     public void displayAllBooks() {
         for (Book book : books.values()) {
             System.out.println(
-                "Title: " + book.getTitle() +
-                ", Author: " + book.getAuthor() +
-                ", ISBN: " + book.getISBN() +
-                ", Quantity: " + book.getQuantity()
+                    "Title: " + book.getTitle() +
+                            ", Author: " + book.getAuthor() +
+                            ", ISBN: " + book.getISBN() +
+                            ", Quantity: " + book.getQuantity()
             );
         }
     }
+
     public boolean checkoutBook(String isbn) {
         Book book = books.get(isbn);
 
@@ -84,5 +88,25 @@ public class LibrarySystem {
         book.setQuantity(book.getQuantity() + 1);
         System.out.println("Returned: " + book.getTitle());
         return true;
+    }
+
+    void loadCSV(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] section = line.split(", ");
+
+                String title = section[0];
+                String author = section[1];
+                String isbn = section[2];
+                int quantity = Integer.parseInt(section[3]);
+
+                addBook(new Book(title, author, isbn, quantity));
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error loading CSV file.");
+        }
     }
 }

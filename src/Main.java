@@ -6,3 +6,4 @@ public class Main {
 }
 
 // Hello
+// TODO:We need to automatically load the CSV file then create the menu options
